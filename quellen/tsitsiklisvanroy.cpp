@@ -8,14 +8,14 @@
 
 using namespace std;
 
-double AmericanOption::anteilNull(vector<double> v){
-	double s=(double)((int)v.size());
+double AmericanOption::anteilNull(vector<double> v) {
+	double s = (double) ((int) v.size());
 	double z;
-for(int i=0;i<s;++i)
-	if(v.at(i)==0)z+=1.;
-	return z/s;
+	for (int i = 0; i < s; ++i)
+		if (v.at(i) == 0)
+			z += 1.;
+	return z / s;
 }
-
 
 void AmericanOption::trainingpaths_erstellen() {
 //	RNG generator;
@@ -33,7 +33,7 @@ void AmericanOption::trainingpaths_erstellen() {
 //
 //	deleteDoubleFeld(wdiff, N, D);
 	RNG generator;
-	generator.setSeed(7);
+	//generator.setSeed(7);
 	double** wdiff = DoubleFeld(N, D);
 	for (int m = 0; m < LSM_Mtraining; ++m) {
 		for (int d = 0; d < D; ++d)
@@ -52,72 +52,56 @@ double AmericanOption::LSM_C_estimated(double* x, int time, double** koeff) {
 		return 0;
 	double erg = 0;
 
+//	LSM_Mtraining/=4;
+//	double e=C_estimate_Mesh(x,time);
+//	LSM_Mtraining*=4;
+//	return e;
+
 	for (int m = 0; m < Mphi; ++m)
 		erg = erg + koeff[time][m] * LSM_phi(x, m);
 	return erg;
 }
 
 double AmericanOption::LSM_phi(double* x, int j) {
-//
-//	if (j == 0)
-//		return 1;
-//	if (j == 1)
-//		return x[0];
-//	if (j == 2)
-//		return x[0] * x[1];
-//	if (j == 3)
-//		return x[1];
-//	if (j == 4)
-//		return x[0] * x[0];
-//	if (j == 5)
-//		return x[1] * x[1];
-//	if (j == 6) {
-//		if (option == MIN_PUT)
-//			return max(Strike - Max(x, 2), 0);
-//		else
-//			return max(Max(x, 2) - Strike, 0);
-//	}
-
 	if (j == 0)
 		return 1;
 	if (j == 1)
 		return x[0];
 	if (j == 2)
-		return x[1];
-	if (j == 3)
-		return x[2];
-	if (j == 4)
 		return x[0] * x[0];
+	if (j == 3) {
+		//		if (option == MIN_PUT)
+		//			return max(Strike - Max(x, 2), 0);
+		//		else
+		return max(Max(x, D) - Strike, 0);
+	}
+	if (j == 4)
+		return x[0] * x[1];
 	if (j == 5)
 		return x[1] * x[1];
 	if (j == 6)
-		return x[2] * x[2];
+		return x[1];
 	if (j == 7)
-		return x[0] * x[1];
+		return x[2];
 	if (j == 8)
-		return x[1] * x[2];
+		return x[2] * x[2];
 	if (j == 9)
+		return x[1] * x[2];
+	if (j == 10)
 		return x[0] * x[2];
-	if (j == 10) {
-//		if (option == MIN_PUT)
-//			return max(Strike - Max(x, 2), 0);
-//		else
-			return max(Max(x, D) - Strike, 0);
-	}
 
 	printf("ERROR56 %d\n", j);
 	return 0;
-
 }
 
 void AmericanOption::LSM_setting() {
 
 	if (D == 1)
-		Mphi = 6;
+		Mphi = 4;
 	if (D == 2)
 		Mphi = 7;
 
-	if (D == 3)
+	if (D >= 3)
 		Mphi = 11;
 
 	dt = T / (double(N - 1));
@@ -267,6 +251,7 @@ double** AmericanOption::TzitsiklisVanRoy() {
 
 	double ** V = DoubleFeld(LSM_Mtraining, number_of_Exercise_Dates);
 	double ** B = DoubleFeld(Mphi, Mphi);
+
 	double BV[Mphi];
 	double** koeff = DoubleFeld(number_of_Exercise_Dates, Mphi);
 
@@ -302,8 +287,8 @@ double** AmericanOption::TzitsiklisVanRoy() {
 
 		}
 
-		//		koeff[lauf] = gauss(B, BV, Mphi);
-		koeff[lauf] = LGS_mit_alglib_loesen(B, BV, Mphi);
+				koeff[lauf] = gauss(B, BV, Mphi);
+//		koeff[lauf] = LGS_mit_alglib_loesen(B, BV, Mphi);
 
 //			for(int m=0;m<Mphi;++m)
 //				if(! koeff[lauf][box][m]<10000000)koeff[lauf][box][m]=0;

@@ -13,11 +13,11 @@
 #include <functional>
 #include <vector>
 #include <stdlib.h>
-#include "../alglib/ap.h"
-#include "../alglib/linalg.h"
-#include "../alglib/solvers.h"
+//#include "../alglib/ap.h"
+//#include "../alglib/linalg.h"
+//#include "../alglib/solvers.h"
 #include "AmericanOption.h"
-using namespace alglib;
+//using namespace alglib;
 using namespace std;
 //
 //double varianz(vector<double> vec){
@@ -548,27 +548,27 @@ double* AmericanOption::LGSloesen(double** AA, double* bb, int Mphi) {
 
 //
 double* LGS_mit_alglib_loesen(double** A, double* b, int Mphi) {
-	real_1d_array bb;
-	real_2d_array AA;
-	AA.setlength(Mphi, Mphi);
-	bb.setlength(Mphi);
-
-	for (int i = 0; i < Mphi; ++i) {
-		bb[i] = b[i];
-		for (int k = 0; k < Mphi; ++k)
-			AA[i][k] = A[i][k];
-	}
-
-	real_1d_array e;
-	densesolverreport rep;
-	ae_int_t info;
-	rmatrixsolve(AA, Mphi, bb, info, rep, e);
-
-	double* erg = (double*) malloc(sizeof(double) * Mphi);
-	for (int k = 0; k < Mphi; ++k)
-		erg[k] = e[k];
-	return erg;
-	printf("Error 926\n");
+//	real_1d_array bb;
+//	real_2d_array AA;
+//	AA.setlength(Mphi, Mphi);
+//	bb.setlength(Mphi);
+//
+//	for (int i = 0; i < Mphi; ++i) {
+//		bb[i] = b[i];
+//		for (int k = 0; k < Mphi; ++k)
+//			AA[i][k] = A[i][k];
+//	}
+//
+//	real_1d_array e;
+//	densesolverreport rep;
+//	ae_int_t info;
+//	rmatrixsolve(AA, Mphi, bb, info, rep, e);
+//
+//	double* erg = (double*) malloc(sizeof(double) * Mphi);
+//	for (int k = 0; k < Mphi; ++k)
+//		erg[k] = e[k];
+//	return erg;
+//	printf("Error 926\n");
 	return NULL;
 }
 

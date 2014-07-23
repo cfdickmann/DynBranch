@@ -14,17 +14,16 @@
 using namespace std;
 
 void AmericanOption::printBranchingInfo() {
-
 	printf("anteil null: %f\n",mittelwert(anteil));
 	printf("R=%f, Mesh stoppt zuerst: %.2lf\n", R,  mittelwert(welche));
-	double Rho1 = mittelwert(rho1);
-	double Rho2 = mittelwert(rho2);
+	 Rho1 = mittelwert(rho1);
+	 Rho2 = mittelwert(rho2);
 	//Rho2 = 0.00173; //Achtung
 	double theta = Rho2 / Rho1;
 
-	double V2 = mittelwert(v3_samples);
+	 V2 = mittelwert(v3_samples);
 
-	double V1 = getLevel1Var()*10 - V2 / R;
+	 V1 = getLevel1Var()*10. - V2 / R;
 //	double V1 = ;
 	double eta = V1 / V2;
 
@@ -35,7 +34,7 @@ void AmericanOption::printBranchingInfo() {
 	printf("rho1=%.5lf, rho2=%.5lf, theta=rho2/rho1=%.5lf\n", Rho1, Rho2,
 			theta);
 	printf("v1= %.3lf, v2=%.3lf(%d), eta=v1/v2=%.3lf\n", V1, V2,
-			v3_samples.size(), eta);
+			(int)v3_samples.size(), eta);
 	printf("gain= %.3lf with R*=%.3lf\n", gain, R_opt);
 
 	//printf("gesamtvar=%f\n", (V1 + V2) * gain);
@@ -52,13 +51,13 @@ void AmericanOption::printInfo() {
 	double E1 = getLevel1E();
 
 	printf("Level 0:\t %.3lf (%.3lf),\t%d Pfade,\tcomp=%.3lfms\n", E0,
-			getLevel0Var(), (int) Level0ergs.size(), mittelwert(Level0comp));
+			getLevel0Var(), (int) Level0ergs.size()*10000, mittelwert(Level0comp));
 
 	printf("Level 1:\t ");
 	if (E0 > 10.)
 		printf(" ");
 	printf("%.3lf (%.3lf),\t%d Pfade,\tcomp=%.3lfms\n", E1, getLevel1Var(),
-			(int) Level1ergs.size(), mittelwert(Level1comp));
+			(int) Level1ergs.size()*10, mittelwert(Level1comp));
 
 	printf("gesamt:\t\t %.3lf", E0 + E1);
 
@@ -134,12 +133,13 @@ double AmericanOption::Level1ex() {
 	int stopp0 = N - 1;
 	int stopp1 = N - 1;
 	for (int n = 0; n < N; ++n) {
-		if (payoff(XX, n) > LSM_C_estimated(XX, n, gammas)) {
+			if(payoff(XX, n) > LSM_C_estimated(XX, n, gammas)) {
 			welch = 0;
 			p0 = payoff(XX, n);
 			stopp0 = n;
 		}
 
+		if (payoff(XX,n)>0)
 		if (payoff(XX, n) > C_estimate_Mesh(XX, n)) {
 			welch = 1;
 			p1 = payoff(XX, n);
@@ -180,6 +180,7 @@ double AmericanOption::Level1ex() {
 			int st;
 			for (int n = stopp0; n < N; ++n) {
 				st = n;
+				if (payoff(YY,n)>0)
 				if (payoff(YY, n) > C_estimate_Mesh(YY, n)) {
 					ppp = payoff(YY, n);
 
@@ -189,7 +190,7 @@ double AmericanOption::Level1ex() {
 			}
 			if (r == 0){
 				rho2.push_back((double) (st - stopp0));
-			printf("sdf %f\n",(double) (st - stopp0));
+			//printf("sdf %f\n",(double) (st - stopp0));
 			}
 			pp.push_back(ppp);
 		}
@@ -244,7 +245,7 @@ void AmericanOption::addLevel0Path() {
 	double t1 = tim.tv_sec + (tim.tv_usec / 1000000.0);
 
 	vector<double> ee;
-	for (int i = 0; i < 1000; ++i)
+	for (int i = 0; i < 10000; ++i)
 		ee.push_back(Level0ex());
 	Level0ergs.push_back(mittelwert(ee));
 

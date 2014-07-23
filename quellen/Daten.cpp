@@ -12,7 +12,7 @@ void AmericanOption::Daten() {
         PfadModell = ITO;
         option = MAX_CALL;
         delta = 0.1;
-        D = 3;//Achtung!
+        D = 2;//Achtung!
         for (int j = 0; j < D; ++j) {
             X0[j] = 90.;
             sigma[j] = 0.2;

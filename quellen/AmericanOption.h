@@ -34,7 +34,6 @@ namespace std {
 
 class AmericanOption {
 public:
-
 	void Dyn();
 	void DynDet();
 	void DynMesh();
@@ -46,10 +45,10 @@ public:
 	time_t t1;
 
 	void MeshP();
-vector<double> anteil;
+	vector<double> anteil;
 
-	double anteilNull(vector<double >v );
-	vector<double> rho1,v3_samples;
+	double anteilNull(vector<double> v);
+	vector<double> rho1, v3_samples;
 	vector<double> rho2;
 	vector<double> welche;
 	vector<double> Level1ergs;
@@ -58,6 +57,11 @@ vector<double> anteil;
 	vector<double> Level1comp;
 	double getLevel1E();
 	double getLevel0E();
+
+	double V1;
+	double V2;
+double Rho1;
+double Rho2;
 
 	void printInfo();
 	void printBranchingInfo();
@@ -177,7 +181,6 @@ vector<double> anteil;
 	double kernelD(double * von, double* nach, double dt);
 	//double kernelD(double * von, double* nach, double dt, double sqrdt);
 	double* LGSloesen(double** AA, double* bb, int Mphi);
-
 };
 
 } /* namespace std */

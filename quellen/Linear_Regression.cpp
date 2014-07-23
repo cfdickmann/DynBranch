@@ -115,10 +115,20 @@ double RegressionV(vector<double> X, vector<double> CV, vector<double> weights,
 		printf("  #### Regression X~a+b*CV durchgefuehrt, a=%f, b=%f ####  \n",
 				alpha, beta);
 
+//	double zaehler = 0;
+//	for (int i = 0; i < (int) X.size(); ++i) {
+//	zaehler+=  weights.at(i) * X.at(i) - beta * weights.at(i) * CV.at(i)
+//				+ ECV * beta * weights.at(i);
+//	}
+//
+//	double nenner = 0;
+//	for (int i = 0; i < (int) X.size(); ++i)
+//		nenner += weights.at(i);
+//
+//	printf("kkontrollwert:%f\n", zaehler / nenner);
+
 	return alpha + beta * ECV;
 }
-
-
 
 double* gausseidel(double** A, double* b, int K, int iterationen) {
 // printf("A(%d,%d):\n",K,K);

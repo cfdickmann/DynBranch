@@ -11,8 +11,8 @@
 using namespace std;
 //
 void AmericanOption::Dyn() {
-	int zeit = 120;
-	R = 100;
+	int zeit = 500000;
+	R = 200;
 	Daten();
 	dt = T / (double) (N - 1);
 	LSM_setting();
@@ -27,11 +27,11 @@ void AmericanOption::Dyn() {
 	trainingpaths_erstellen();
 
 	gammas = TzitsiklisVanRoy();
-	for (int n = 1; n < N; ++n)
-		gammas[n][0] += 0.000000;
+//	for (int n = 1; n < N; ++n)
+//		gammas[n][0] += 0.000000;
 
 	int_dt = 0.01;
-	LSM_Mtraining = 2500;
+	LSM_Mtraining = 2000;
 	weights_erstellen();
 	trainingpaths_regression(); // Mesh
 
@@ -44,19 +44,22 @@ void AmericanOption::Dyn() {
 		double r1 = sqrt(getLevel1Var() / getLevel1Comp())
 				/ (double) Level1ergs.size();
 
-		addLevelMPath();
-
 		if (r0 > r1)
 			addLevel0Path();
 		else
 			addLevel1Path();
 
-		if (rand() % 10 == 0) {
+		if (rand() % 1 == 0)
+		{
 			printBranchingInfo();
 			printInfo();
 		}
 	}
 	ErgebnisAnhaengen(getLevel0E() + getLevel1E(), (char*) "ergebnisse.txt");
+	ErgebnisAnhaengen(V1, (char*) "v1.txt");
+	ErgebnisAnhaengen(V2, (char*) "v2.txt");
+	ErgebnisAnhaengen(Rho1, (char*) "Rho1.txt");
+	ErgebnisAnhaengen(Rho2, (char*) "Rho2.txt");
 }
 
 void AmericanOption::DynDet() {
@@ -102,10 +105,9 @@ void AmericanOption::DynDet() {
 //		for (int i = 0; i < 468/10; ++i) {
 //			addLevel1Path();
 
+	for (int i = 0; i < 3150 / 10; ++i) {
 
-			for (int i = 0; i < 3150/10; ++i) {
-
-				addLevelMPath();
+		addLevelMPath();
 
 		if (rand() % 10 == 0) {
 			printBranchingInfo();
