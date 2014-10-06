@@ -11,21 +11,6 @@
 using namespace std;
 
 int main(int argc, char* args[]) {
-
-//	RNG generator;
-//	vector<double> x, cv, w;
-//	double e = 0;
-//
-//	for (int i = 0; i < 100000; ++i) {
-//		w.push_back(0.1);
-//		double xx = generator.nextGaussian();
-//		x.push_back(xx);
-//		cv.push_back(xx + 0.1 * generator.nextGaussian());
-//	}
-//
-//	printf("%f\n", RegressionV(x, cv, w, e, true));
-//	exit(0);
-
 	bool det = false;
 	bool mesh = false;
 
@@ -70,10 +55,6 @@ int main(int argc, char* args[]) {
 			exit(0);
 		};
 	}
-//
-//	double runden = 1;
-//	if (argc > 1) //if(!atof(args[1]))
-//		runden = atof(args[1]);
 
 	for (int r = 0; r < runden; ++r) {
 		AmericanOption Amo;
@@ -85,7 +66,6 @@ int main(int argc, char* args[]) {
 			else
 				Amo.Dyn();
 		}
-		//AMO.MeshP();
 	}
 
 }

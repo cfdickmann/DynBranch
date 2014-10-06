@@ -18,30 +18,23 @@ void AmericanOption::printBranchingInfo() {
 	printf("R=%f, Mesh stoppt zuerst: %.2lf\n", R,  mittelwert(welche));
 	 Rho1 = mittelwert(rho1);
 	 Rho2 = mittelwert(rho2);
-	//Rho2 = 0.00173; //Achtung
 	double theta = Rho2 / Rho1;
-
 	 V2 = mittelwert(v3_samples);
-
 	 V1 = getLevel1Var()*10. - V2 / R;
-//	double V1 = ;
+	 
 	double eta = V1 / V2;
 
 	double gain = pow(sqrt(eta) + sqrt(theta), 2) / ((theta + 1) * (eta + 1));
 	double R_opt = (sqrt(eta) + sqrt(theta))
 			/ (sqrt(eta) * theta + sqrt(theta) * eta);
-	//printf("\np=%f\n", mittelwert(ratio));
+
 	printf("rho1=%.5lf, rho2=%.5lf, theta=rho2/rho1=%.5lf\n", Rho1, Rho2,
 			theta);
 	printf("v1= %.3lf, v2=%.3lf(%d), eta=v1/v2=%.3lf\n", V1, V2,
 			(int)v3_samples.size(), eta);
 	printf("gain= %.3lf with R*=%.3lf\n", gain, R_opt);
 
-	//printf("gesamtvar=%f\n", (V1 + V2) * gain);
-	//printf("Testing %.5lf\n", mittelwert(e));
-
 	double Rold = R;
-	//R = 0.5 * r + 0.5 * R_opt;
 	printf(" R: %.0lf -> %.0lf \n", Rold, R);
 	cout.flush();
 }
@@ -61,11 +54,11 @@ void AmericanOption::printInfo() {
 
 	printf("gesamt:\t\t %.3lf", E0 + E1);
 
-	double b = 1.96
-			* sqrt(
-					getLevel0Var() / Level0ergs.size()
-							+ getLevel1Var() / Level1ergs.size());
-	printf(" [%.3lf,%.3lf] 95%%CI,", E1 + E0 - b, E1 + E0 + b);
+// 	double b = 1.96
+// 			* sqrt(
+// 					getLevel0Var() / Level0ergs.size()
+// 							+ getLevel1Var() / Level1ergs.size());
+// 	printf(" [%.3lf,%.3lf] 95%%CI,", E1 + E0 - b, E1 + E0 + b);
 
 	printf("\t%.0lf seconds\n", difftime(time(NULL), t1));
 	printf("\n\n");
@@ -196,9 +189,8 @@ double AmericanOption::Level1ex() {
 		}
 		v3_samples.push_back(varianz(pp));
 		p1 = mittelwert(pp);
-	} else //welch==1
+	} else 
 	{
-		//printf("b\n");
 		vector<double> pp;
 		for (int r = 0; r < R; ++r) {
 			setze(YY, XX);

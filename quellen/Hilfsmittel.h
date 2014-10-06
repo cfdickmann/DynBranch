@@ -1,10 +1,3 @@
-/*
- * Hilfsmittel.h
- *
- *  Created on: Feb 6, 2012
- *      Author: dickmann
- */
-
 #include <stdlib.h>
 
 #include <stdlib.h>
@@ -40,8 +33,6 @@ int* sort(vector<double> vec);
 int* partialsort(vector<double> vec, int n);
 
 int* array_machen(int z);
-//int hargMax(double* v, int l, int ll);
-//int hMax(double* v, int l, int ll);
 
 double Max(double* v, int l);
 double* LGSloesen(double** A, double* b, int Mphi);
@@ -54,8 +45,6 @@ double* alphasLaden(int K);
 void alphasSchreiben(double* alpha,int K);
 void werteSchreiben(double* w,int K, int N);
 void ErgebnisAnhaengen(double d, char* filename);
-
-//double qnorm(double p);
 
 int * IntFeld(int m);
 int ** IntFeld(int m,int n);

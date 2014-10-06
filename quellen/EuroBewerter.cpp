@@ -57,20 +57,6 @@ double EuroBewerter::put_diff2(double t, double T, double X0, double Strike,
 	return exp(-(r - delta) * t) * exp(-T * delta) * (-cnd(-d1));
 }
 
-//
-//// mein call
-//double EuroBewerter::call(double t, double T, double X0, double Strike,
-//		double r, double delta, double sigma) {
-//	double rStrich = r - delta;
-//	double TStrich = T - t;
-//	double d1 = (log(X0 / Strike) + (rStrich + sigma * sigma / 2.) * TStrich)
-//			/ (sigma * sqrt(TStrich));
-//	double d2 = d1 - sigma * sqrt(TStrich);
-//	double wert=exp(-delta * TStrich) * exp(-r * t)
-//			* (X0 * cnd(d1) - Strike * exp(-r * TStrich) * cnd(d2));
-//return wert*exp(-t*(r+delta));
-//}
-
 // Dieser hier ist getestet und gut, discounted und incl. dividend yield
 
 double EuroBewerter::call(double t, double T, double X0, double Strike,
@@ -84,46 +70,6 @@ double EuroBewerter::call(double t, double T, double X0, double Strike,
 	wert *= exp(-(delta) * T);
 	return wert * exp(-t * (r - delta));
 }
-
-////Call vom Nikolaus
-//double EuroBewerter::call(double t, double T, double X0, double Strike,
-//		double r, double delta, double sigma) {
-//
-//	T = T - t;
-//	double d1 = (log(X0 / Strike) + (r + sigma * sigma / 2) * T)
-//			/ (sigma * sqrt(T));
-//	double d2 = d1 - sigma * sqrt(T);
-//	return exp(r * t)
-//			* (X0 * cnd(d1) - Strike  * cnd(d2));
-//}
-////
-//double EuroBewerter::call_diff(double t, double T, double X0, double Strike,
-//		double r, double delta, double sigma) {
-//
-//	T = T - t;
-//	double d1 = (log(X0 / Strike) + (r + sigma * sigma / 2) * T)
-//			/ (sigma * sqrt(T));
-//
-//	return exp(r * t)
-//			* ( cnd(d1));
-//}
-
-//double EuroBewerter::call_diff(double t, double T, double X0, double Strike,
-//		double r, double delta, double sigma) {
-//return
-//}
-
-//auch getestet und gut
-
-//double EuroBewerter::put(double t, double T, double X0, double Strike, double r,
-//		double delta, double sigma) {
-//	r = r - delta;
-//	T = T - t;
-//	double d1 = (log(X0 / Strike) + (r + sigma * sigma / 2) * T)
-//			/ (sigma * sqrt(T));
-//	double d2 = d1 - sigma * sqrt(T);
-//	return exp(-(r+delta)*t)*(exp(-delta * T) * (Strike * exp(-r * T) * cnd(-d2) - X0 * cnd(-d1)));
-//}
 
 double EuroBewerter::put(double t, double T, double X0, double Strike, double r,
 		double delta, double sigma) {
@@ -161,21 +107,6 @@ double EuroBewerter::exchange_option(double x, double y, double t, double T,
 			- y * exp(-delta * TStrich) * cnd(d2);
 	return erg * exp(-r * t);
 }
-
-//double EuroBewerter::exchange_option_diff(double x, double y, double t,
-//		double T, double r, double delta, double sigma, int re) {
-//	if (re == 0) {
-//		double h = 0.00001;
-//		double fh = exchange_option(x + h, y, t, T, r, delta, sigma);
-//		double f = exchange_option(x, y, t, T, r, delta, sigma);
-//		return (fh - f) / h;
-//	} else {
-//		double h = 0.00001;
-//		double fh = exchange_option(x, y + h, t, T, r, delta, sigma);
-//		double f = exchange_option(x, y, t, T, r, delta, sigma);
-//		return (fh - f) / h;
-//	}
-//}
 
 //auch getestet
 double EuroBewerter::exchange_option_diff(double x, double y, double t,

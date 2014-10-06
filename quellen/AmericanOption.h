@@ -60,8 +60,8 @@ public:
 
 	double V1;
 	double V2;
-double Rho1;
-double Rho2;
+	double Rho1;
+	double Rho2;
 
 	void printInfo();
 	void printBranchingInfo();
@@ -89,24 +89,14 @@ double Rho2;
 	double* sigma; //Volatility
 	double T; //Gesamtzeit
 	double** TzitsiklisVanRoy();
-
 	double*** X;
-
-	int N; //time discretization
+	int N; 
 	int D;
-//	int DrivingFactors;
-//	bool vierthreads;
-//	double euro;
 	double dt;
 
 	void LSM_Pfade(int threadnummer);
 	int stoppingrule;
-	bool Parameter_verbose;
-//	bool multilevel;
-//	bool zehnthreads;
-//	bool longstaffschwarz;
-//	bool andersenbroadie;
-//	double europeanValue(double* x, double t, double T, int threadnummer);
+
 	double* Exercise_Dates;
 	int number_of_Exercise_Dates;
 
@@ -116,7 +106,6 @@ double Rho2;
 
 	double int_dt;
 	int Threadanzahl;
-	int PfadModell; //Ito or euler or CIR
 
 	bool Kernel(double *x, double* y, int D, double threshold);
 
@@ -132,7 +121,6 @@ double Rho2;
 	double ** weight_sum;
 	void weights_erstellen();
 
-//	double * cv_beta;
 	EuroBewerter EB;
 	RNG generator;
 
@@ -144,20 +132,14 @@ double Rho2;
 
 	//Longstaff and Schwarz members
 	void trainingpaths_erstellen();
-
 	void LSM_setting();
-
 	double Mesh();
-
 	void LSM_mittelwert(int threadnummer);
 	double LSM_C_estimated(double* x, int time, double ** betas);
-
 	double C_estimate_Mesh(double* x, int lauf);
 	double C_estimate_LocalRegression(double* x, int lauf);
-
 	void trainingpaths_regression();
 	void regression(int threadnummer);
-//	int** reihe;
 	double bandwidth;
 	double LSM_phi(double* x, int j);
 	double LSM_phi_linComb(double* x, double* beta);
@@ -165,21 +147,9 @@ double Rho2;
 	int Mphi;
 
 	double** gammas;
-//	double*** B;
-//	double** BV;
-//	int LSlauf;
-//	bool mlsm;
-//	int LSM_K0;
-//	int LSM_K1;
-//	int LSM_K2;
-//	int LSM_K3;
-//	int LSM_K4;
 	int LSM_Mtraining;
-//	int LSM_Mtesting;
 	int* pivot(double** A);
-//	double kernel(double* von, double* nach);
 	double kernelD(double * von, double* nach, double dt);
-	//double kernelD(double * von, double* nach, double dt, double sqrdt);
 	double* LGSloesen(double** AA, double* bb, int Mphi);
 };
 

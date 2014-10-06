@@ -8,12 +8,11 @@ using namespace std;
 double AmericanOption::C_estimate_Mesh(double* x, int Etime) {
 	if (Etime == N - 1)
 		return 0;
-
+		
 	double v = EB.european_MaxCall_ND(x, D, (double) (Etime) * (dt), //gutes
 	(double) (Etime + 1) * dt, Strike, r, delta, sigma[0], int_dt);
-
+	
 	int e = (int) Exercise_Dates[Etime + 1];
-//	double K = 0;
 	vector<double> weightsss;
 	vector<double> y;
 	vector<double> cv;
@@ -47,15 +46,6 @@ void AmericanOption::trainingpaths_regression() {
 }
 
 void AmericanOption::weights_erstellen() {
-//	weights = DoubleFeld(N, LSM_Mtraining, LSM_Mtraining);
-//	for (int n = 0; n < N - 1; ++n)
-//		for (int m = 0; m < LSM_Mtraining; ++m)
-//			for (int l = 0; l < LSM_Mtraining; ++l) {
-//				weights[n][m][l] =
-//						//kernelD(X[m][n], X[l][n + 1], dt)/
-//						kernelD(X0, X[l][n + 1], dt * (double) (n + 1));
-//			}
-
 	weights = DoubleFeld(N, LSM_Mtraining);
 	for (int n = 0; n < N - 1; ++n)
 		for (int l = 0; l < LSM_Mtraining; ++l)
@@ -69,7 +59,6 @@ void AmericanOption::weights_erstellen() {
 				weight_sum[n][l] += kernelD(X[m][n], X[l][n + 1], dt);
 //						/ kernelD(X0, X[l][n + 1], dt * (double) (n + 1));
 		}
-
 }
 
 double phi(double x) {

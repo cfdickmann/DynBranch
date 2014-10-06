@@ -13,24 +13,8 @@
 #include <functional>
 #include <vector>
 #include <stdlib.h>
-//#include "../alglib/ap.h"
-//#include "../alglib/linalg.h"
-//#include "../alglib/solvers.h"
 #include "AmericanOption.h"
-//using namespace alglib;
 using namespace std;
-//
-//double varianz(vector<double> vec){
-//	if(vec.size()==0)return 0;
-//	double erg=0;
-//	double ergQ;
-//	for(unsigned i=0;i<vec.size();++i)
-//	{
-//		erg+=vec.at(i);
-//		ergQ+=pow(vec.at(i),2);
-//	}
-//	return (ergQ/(double)vec.size())-pow(erg/(double)vec.size(),2);
-//}
 
 double varianz(vector<double> vec) {
 	if (vec.size() == 0)
@@ -216,19 +200,6 @@ int argDritter(double *v, int l) {
 	return argZwe;
 }
 
-void InPipeSchreiben(int* pipe, double wert) {
-	close(pipe[0]);
-	char string[20];
-	sprintf(string, "%f", wert);
-	write(pipe[1], string, (strlen(string) + 1));
-}
-
-double AusPipeLesen(int* pipe) {
-	close(pipe[1]);
-	char readbuffer[200];
-	read(pipe[0], readbuffer, sizeof(readbuffer));
-	return atof(readbuffer);
-}
 
 double Max(double* v, int l) {
 	return v[argMax(v, l)];
@@ -237,84 +208,6 @@ double Max(double* v, int l) {
 double Min(double* v, int l) {
 	return v[argMin(v, l)];
 }
-
-////double qnorm(double p) {
-//	/** * @(#)qnorm.js * * Copyright (c) 2000 by Sundar Dorai-Raj
-//	 * * @author Sundar Dorai-Raj
-//	 * * Email: sdoraira@vt.edu
-//	 * * This program is free software; you can redistribute it and/or
-//	 * * modify it under the terms of the GNU General Public License
-//	 * * as published by the Free Software Foundation; either version 2
-//	 * * of the License, or (at your option) any later version,
-//	 * * provided that any use properly credits the author.
-//	 * * This program is distributed in the hope that it will be useful,
-//	 * * but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	 * * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-//	 * * GNU General Public License for more details at http://www.gnu.org * * */
-//	// ALGORITHM AS 111, APPL.STATIST., VOL.26, 118-121, 1977.
-//	// Computes z=invNorm(p)
-//	//	double split = 0.42;
-//	//	double a0 = 2.50662823884, a1 = -18.61500062529, a2 = 41.39119773534;
-//	//	double a3 = -25.44106049637, b1 = -8.47351093090, b2 = 23.08336743743;
-//	//	double b3 = -21.06224101826, b4 = 3.13082909833;
-//	//	double c0 = -2.78718931138, c1 = -2.29796479134, c2 = 4.85014127135;
-//	//	double c3 = 2.32121276858, d1 = 3.54388924762, d2 = 1.63706781897;
-//	//	double q = p - 0.5;double rr = 0;double ppnd = 0;
-//	//	if (fabs(q) <= split) {
-//	//		rr = q * q;
-//	//		ppnd = q * (((a3 * rr + a2) * rr + a1) * rr + a0) / ((((b4 * rr + b3) * rr + b2) * rr + b1) * rr + 1);
-//	//	} else {
-//	//		rr = p;
-//	//		if (q > 0)
-//	//			rr = 1 - p;
-//	//		if (rr > 0) {
-//	//			rr = sqrt(-log(rr));
-//	//			ppnd = (((c3 * rr + c2) * rr + c1) * rr + c0) / ((d2 * rr + d1) * rr + 1);
-//	//			if (q < 0)
-//	//				ppnd = -ppnd;
-//	//		} else
-//	//			ppnd = 0;
-//	//	}
-//	//	return (ppnd);
-//
-//	/** * @(#)qnorm.js * * Copyright (c) 2000 by Sundar Dorai-Raj
-//	 * * @author Sundar Dorai-Raj
-//	 * * Email: sdoraira@vt.edu
-//	 * * This program is free software; you can redistribute it and/or
-//	 * * modify it under the terms of the GNU General Public License
-//	 * * as published by the Free Software Foundation; either version 2
-//	 * * of the License, or (at your option) any later version,
-//	 * * provided that any use properly credits the author.
-//	 * * This program is distributed in the hope that it will be useful,
-//	 * * but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	 * * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-//	 * * GNU General Public License for more details at http://www.gnu.org * * */
-//	// ALGORITHM AS 111, APPL.STATIST., VOL.26, 118-121, 1977.
-//	// Computes z=invNorm(p)
-//	double split = 0.42;
-//	double a0 = 2.50662823884, a1 = -18.61500062529, a2 = 41.39119773534;
-//	double a3 = -25.44106049637, b1 = -8.47351093090, b2 = 23.08336743743;
-//	double b3 = -21.06224101826, b4 = 3.13082909833;
-//	double c0 = -2.78718931138, c1 = -2.29796479134, c2 = 4.85014127135;
-//	double c3 = 2.32121276858, d1 = 3.54388924762, d2 = 1.63706781897;
-//	double q = p - 0.5;double rr = 0;double ppnd = 0;
-//	if (abs(q) <= split) {
-//		rr = q * q;
-//		ppnd = q * (((a3 * rr + a2) * rr + a1) * rr + a0) / ((((b4 * rr + b3) * rr + b2) * rr + b1) * rr + 1);
-//	} else {
-//		rr = p;
-//		if (q > 0)
-//			rr = 1 - p;
-//		if (rr > 0) {
-//			rr = sqrt(-log(rr));
-//			ppnd = (((c3 * rr + c2) * rr + c1) * rr + c0) / ((d2 * rr + d1) * rr + 1);
-//			if (q < 0)
-//				ppnd = -ppnd;
-//		} else
-//			ppnd = 0;
-//	}
-//	return (ppnd);
-//}
 
 double max(double x, double y) {
 	return x < y ? y : x;
@@ -441,31 +334,6 @@ int* array_machen(int z) {
 	return erg;
 }
 
-//int* AmericanOption::pivot(double** A) {
-//	//	int nn = Mphi;
-//	int* pivot = (int*)malloc(sizeof(int)*Mphi);
-//	for (int j = 0; j < Mphi - 1; j++) {
-//		double max = fabs(A[j][j]);
-//		int imax = j;
-//		for (int i = j + 1; i < Mphi; i++)
-//			if (fabs(A[i][j]) > max) {
-//				max = fabs(A[i][j]);
-//				imax = i;
-//			}
-//		double* h =DoubleFeld(Mphi);
-//		for(int i=0;i<Mphi;++i)h[i]=A[j][i];
-//		A[j] = A[imax];
-//		A[imax] = h;
-//		pivot[j] = imax;
-//		for (int i = j + 1; i < Mphi; i++) {
-//			double f = -A[i][j] / A[j][j];
-//			for (int k = j + 1; k < Mphi; k++)
-//				A[i][k] += f * A[j][k];
-//			A[i][j] = -f;
-//		}
-//	}
-//	return pivot;
-//}
 
 int* AmericanOption::pivot(double** A) {
 	//	int nn = Mphi;
@@ -495,8 +363,6 @@ int* AmericanOption::pivot(double** A) {
 }
 
 double* AmericanOption::LGSloesen(double** AA, double* bb, int Mphi) {
-	//return LGS_mit_alglib_loesen(AA,bb,Mphi);
-
 	double** A = new double*[Mphi];
 	for (int m = 0; m < Mphi; ++m)
 		A[m] = new double[Mphi];
@@ -512,11 +378,6 @@ double* AmericanOption::LGSloesen(double** AA, double* bb, int Mphi) {
 	for (int i = 0; i < Mphi; ++i)
 		for (int j = 0; j < Mphi; ++j)
 			B[i][j] = A[i][j];
-
-	//	double** A=AA;
-	//	double* b=bb;
-	//	double** B=A;
-	//	// loest das LGS Ax = b nach x auf
 
 	double* x = DoubleFeld(Mphi);
 	for (int i = 0; i < Mphi; ++i)
@@ -545,158 +406,6 @@ double* AmericanOption::LGSloesen(double** AA, double* bb, int Mphi) {
 
 	return x;
 }
-
-//
-double* LGS_mit_alglib_loesen(double** A, double* b, int Mphi) {
-//	real_1d_array bb;
-//	real_2d_array AA;
-//	AA.setlength(Mphi, Mphi);
-//	bb.setlength(Mphi);
-//
-//	for (int i = 0; i < Mphi; ++i) {
-//		bb[i] = b[i];
-//		for (int k = 0; k < Mphi; ++k)
-//			AA[i][k] = A[i][k];
-//	}
-//
-//	real_1d_array e;
-//	densesolverreport rep;
-//	ae_int_t info;
-//	rmatrixsolve(AA, Mphi, bb, info, rep, e);
-//
-//	double* erg = (double*) malloc(sizeof(double) * Mphi);
-//	for (int k = 0; k < Mphi; ++k)
-//		erg[k] = e[k];
-//	return erg;
-//	printf("Error 926\n");
-	return NULL;
-}
-
-//
-//int* bary(int k, int b) {
-//     int* a;
-//     if (k > 0) {
-//         int jmax = (int) floor(log(k) / log(b));
-//         a =(int*)malloc(sizeof(int)*(jmax + 1));
-//         int q = (int) pow(b, jmax);
-//         for (int j = 1; j <= jmax + 1; ++j) {
-//             a[j - 1] = (int) floor((double) k / (double) q);
-//             k = k - q * a[j - 1];
-//             q = q / b;
-//         }
-//     }
-//     return a;
-// }
-//
-// int* nextbary(int l, int* ain, int b) {
-//     int m = l;
-//     int* aout =(int*)malloc(sizeof(int)*m);
-//     bool carry = true;
-//     for (int i = m; i >= 1; --i) {
-//         if (carry) {
-//             if (ain[i - 1] == b - 1) {
-//                 aout[i - 1] = 0;
-//             } else {
-//                 aout[i - 1] = ain[i - 1] + 1;
-//                 carry = false;
-//             }
-//         } else {
-//             aout[i - 1] = ain[i - 1];
-//         }
-//     }
-//     if (carry) {
-//         int* Aout =(int*)malloc(sizeof(int)*(m + 1));
-//         for (int i = 1; i < m+1; ++i) {
-//             Aout[i] = aout[i - 1];
-//         }
-//         Aout[0] = 1;
-//         return Aout;
-//     } else {
-//         return aout;
-//     }
-// }
-//
-// double** fauremat(int r, int i) {
-//        double** C = DoubleFeld(r,r);
-//        C[0][0] = 1;
-//        for (int m = 2; m <= r; ++m) {
-//            C[m - 1][m - 1] = 1;
-//            C[0][m - 1] = i * C[0][m - 2];
-//        }
-//        for (int n = 3; n <= r; ++n) {
-//            for (int m = 2; m < n; ++m) {
-//                C[m - 1][n - 1] = C[m - 2][n - 2] + i * C[m - 1][n - 2];
-//            }
-//        }
-//        return C;
-//    }
-//
-// double mod(double a, double b)
-//  {
-//  int result = static_cast<int>( a / b );
-//  return a - static_cast<double>( result ) * b;
-//  }
-//
-//double** faurepts(int n0, int npts, int d, int b) {
-//        int nmax = n0 + npts - 1;
-//        int rmax = (int) (1 + floor(log(nmax) / log(b)));
-//        double** P = DoubleFeld(npts,d);
-//        for (int i = 0; i < npts; ++i) {
-//            for (int k = 0; k < d; ++k) {
-//                P[i][k] = 0;
-//            }
-//        }
-//        double* y = DoubleFeld(rmax);
-//        for (int i = 0; i < rmax; ++i) {
-//            y[i] = 0;
-//        }
-//        int r = (int) (1 + floor(log(max(1, n0 - 1)) / log(b)));
-//        double qnext = pow(b, r);
-//        int* a = bary(n0 - 1, b); //TODO
-//        int jmax = (int) floor(log(n0-1) / log(b));
-//
-//        double *** C = (double***)malloc(sizeof(double**)*d);
-//
-//        for (int i = 1; i < d; ++i) {
-//            C[i] = fauremat(rmax, i);
-//        }
-//
-//        double* bpwrs = DoubleFeld(rmax);
-//        for (int i = 0; i < rmax; ++i) {
-//            bpwrs[i] = 1. / pow(b, i + 1);
-//        }
-//        for (int k = n0; k <= nmax; ++k) {
-//            a = nextbary(jmax+1,a, b); //TODO
-//            if (k == qnext) {
-//                r++;
-//                qnext = b * qnext;
-//            }
-//            for (int j = 1; j <= r; ++j) {
-//                P[k - n0][0] = P[k - n0][0] + bpwrs[j - 1] * a[r - j];
-//            }
-//            for (int i = 2; i <= d; ++i) {
-//                for (int m = 1; m <= r; m++) {
-//                    for (int n = 1; n <= r; ++n) {
-//                        y[m - 1] = y[m - 1] + C[i - 1][m - 1][n - 1] * a[r - n];
-//                    }
-//                   // printf("vorher: %f\n",y[m-1]);
-//                    y[m - 1] = y[m - 1]  -floor(y[m-1]/(double)b)*b;
-//                 //   y[m - 1] = mod( y[m - 1]  ,b);
-//                 //   printf("nachher: %f\n",y[m-1]);
-//                    P[k - n0][i - 1] = P[k - n0][i - 1] + bpwrs[m - 1] * y[m - 1];
-//                    y[m - 1] = 0;
-//                }
-//            }
-//        }
-//
-//        for(int n=0;n<npts;n++)
-//        	for(int k=0;k<d;++k)
-//
-//        		P[n][k]= P[n][k]  -floor(P[n][k]);
-//        return P;
-//    }
-
-//bool schonfertig;
 
 void tausche(double* daten, int * reihe, int i, int k) {
 	double temp = daten[i];
@@ -748,12 +457,6 @@ int* quicksort(double* daten, int* reihe, int l) {
 	quicksort(daten2, reihe2, 0, l - 1);
 	delete[] daten2;
 
-	//	int* reihe3=new int[l];
-	//	for(int ll=0;ll<l;++ll)
-	//			reihe3[ll]=reihe2[ll];
-	//
-	//delete[] reihe2;
-
 	return reihe2;
 }
 
@@ -799,13 +502,6 @@ int* quicksortStochPart(double* daten, int l, int number) {
 			pos[k] = ll;
 			k++;
 		}
-	//int pin=rand();
-	//printf("\n");
-	//	for(int kk=0;kk<k;++kk)
-	//	{		printf("%d:pos [%d]= %d\n",pin,kk,pos[kk]);
-	//
-	//		printf("%d:pos [%d]= %f\n",pin,kk,pre[kk]);
-	//}
 	int* r = quicksort((double*) pre, k);
 
 	int* reihe = new int[number];
@@ -848,12 +544,6 @@ int* quicksortUP(double* daten, int* reihe, int l) {
 
 	quicksortUP(daten2, reihe2, 0, l - 1);
 	delete[] daten2;
-
-	//	int* reihe3=new int[l];
-	//	for(int ll=0;ll<l;++ll)
-	//			reihe3[ll]=reihe2[ll];
-	//
-	//delete[] reihe2;
 
 	return reihe2;
 }

@@ -30,11 +30,6 @@ public:
     void generate_numbers();
 private:
    long int x,a,c,m;
-
-//    int* MT;
-// int index;
-
-
 };
 
 #endif	/* LCG_GENERATOR_H */

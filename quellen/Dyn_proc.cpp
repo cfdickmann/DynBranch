@@ -9,7 +9,7 @@
 #include "Hilfsmittel.h"
 #include "AmericanOption.h"
 using namespace std;
-//
+
 void AmericanOption::Dyn() {
 	int zeit = 500000;
 	R = 200;
@@ -27,11 +27,9 @@ void AmericanOption::Dyn() {
 	trainingpaths_erstellen();
 
 	gammas = TzitsiklisVanRoy();
-//	for (int n = 1; n < N; ++n)
-//		gammas[n][0] += 0.000000;
 
-	int_dt = 0.01;
-	LSM_Mtraining = 2000;
+	int_dt = 0.001;
+	LSM_Mtraining = 500;
 	weights_erstellen();
 	trainingpaths_regression(); // Mesh
 
@@ -78,8 +76,6 @@ void AmericanOption::DynDet() {
 
 	trainingpaths_erstellen();
 	gammas = TzitsiklisVanRoy();
-//	for (int n = 1; n < N; ++n)
-//		gammas[n][0] += 0.05;
 
 	int_dt = 0.01;
 	LSM_Mtraining = 2500;
@@ -88,27 +84,8 @@ void AmericanOption::DynDet() {
 
 	t1 = time(NULL);
 
-//	for (int i = 0; i < 536178/1000; ++i) //QMC
-//		addLevel0Path();
-//	printBranchingInfo();
-//	printInfo();
-//
-//	for (int i = 0; i < 2989/10; ++i) {
-//		addLevel1Path();
-//
-//	for (int i = 0; i < 1784813/1000; ++i)  //QMC Branching
-//			addLevel0Path();
-//
-//		printBranchingInfo();
-//		printInfo();
-//
-//		for (int i = 0; i < 468/10; ++i) {
-//			addLevel1Path();
-
-	for (int i = 0; i < 3150 / 10; ++i) {
-
+	for (int i = 0; i < 3150 ; ++i) {
 		addLevelMPath();
-
 		if (rand() % 10 == 0) {
 			printBranchingInfo();
 			printInfo();
@@ -142,13 +119,9 @@ void AmericanOption::DynMesh() {
 	t1 = time(NULL);
 
 	while (difftime(time(NULL), t1) < (double) zeit) {
-
 		addLevelMPath();
-
 		if (rand() % 10 == 0)
 			printInfo();
 	}
 	ErgebnisAnhaengen(getLevel0E() + getLevel1E(), (char*) "ergebnisse.txt");
-
 }
-

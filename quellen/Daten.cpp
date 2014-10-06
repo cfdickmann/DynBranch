@@ -8,11 +8,10 @@ void AmericanOption::Daten() {
     X0 = DoubleFeld(100); //genug Platz
     sigma = DoubleFeld(100);
 
-    if (Example == 3) { //Glasserman Example MaxCall
-        PfadModell = ITO;
+    if (Example == 3) { 
         option = MAX_CALL;
         delta = 0.1;
-        D = 2;//Achtung!
+        D = 2;
         for (int j = 0; j < D; ++j) {
             X0[j] = 90.;
             sigma[j] = 0.2;
